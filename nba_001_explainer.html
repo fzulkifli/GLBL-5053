@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 0.01% — How hard is it to make the NBA?</title>
+<style>
+:root{
+  --bg:#080b10;--panel:#10151d;--panel2:#151c26;--text:#f5f7fa;--muted:#98a2b3;
+  --line:#26303e;--accent:#f4b942;--accent2:#f26b38;--good:#69d49a;--blue:#6cb6ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:#b8d8ff} .wrap{max-width:1120px;margin:auto;padding:0 24px}
+.hero{min-height:86vh;display:grid;place-items:center;border-bottom:1px solid var(--line);background:
+radial-gradient(circle at 70% 25%,rgba(244,185,66,.12),transparent 30%),
+radial-gradient(circle at 20% 70%,rgba(108,182,255,.08),transparent 35%)}
+.hero-inner{max-width:900px;padding:80px 0}
+.eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800}
+h1{font-size:clamp(3.3rem,10vw,7.7rem);line-height:.88;margin:.22em 0 .25em;letter-spacing:-.06em}
+.hero p{font-size:clamp(1.1rem,2vw,1.5rem);color:#c5ccd7;max-width:760px}
+.scrollhint{margin-top:42px;color:var(--muted);font-size:.9rem}
+section{padding:96px 0;border-bottom:1px solid var(--line)}
+.kicker{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:800}
+h2{font-size:clamp(2.2rem,5vw,4.2rem);line-height:1.02;letter-spacing:-.045em;margin:.2em 0 .35em}
+.lede{font-size:1.16rem;color:#bdc5d0;max-width:800px}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:35px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.stat .n{font-size:clamp(2rem,5vw,3.8rem);font-weight:850;letter-spacing:-.05em}
+.stat .label{color:var(--muted);font-size:.9rem}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:28px 0}
+button,.seg button{border:1px solid var(--line);background:#121923;color:var(--text);padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+button.active{background:var(--accent);color:#15100a;border-color:var(--accent)}
+input[type=range]{width:min(380px,100%);accent-color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px}
+.dotbox{display:grid;grid-template-columns:repeat(50,1fr);gap:3px;min-height:260px;padding:10px}
+.dot{aspect-ratio:1;border-radius:50%;background:#303846;transition:opacity .35s,transform .35s,background .35s}
+.dot.kept{background:var(--accent);transform:scale(1.18)} .dot.dim{opacity:.11}
+.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin-top:14px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;background:var(--accent)}
+.callout{font-size:clamp(1.7rem,4vw,3rem);line-height:1.08;font-weight:800;letter-spacing:-.035em;margin:45px 0}
+.callout span{color:var(--accent)}
+.funnel{display:grid;grid-template-columns:1fr;gap:18px;margin:30px 0}
+.fbar{display:flex;align-items:center;gap:15px}
+.bar{height:46px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));min-width:5px}
+.fmeta{min-width:200px}.fmeta strong{display:block}.fmeta small{color:var(--muted)}
+.money{margin-top:34px}.money-axis{position:relative;height:285px;border-bottom:1px solid var(--line)}
+.money-mark{position:absolute;bottom:0;transform:translateX(-50%);text-align:center;width:150px}
+.money-mark .stem{width:2px;height:var(--h);background:#556171;margin:auto}
+.money-mark .ball{width:14px;height:14px;border-radius:50%;background:var(--accent);margin:-7px auto 9px}
+.money-mark strong{display:block;font-size:.95rem}.money-mark small{color:var(--muted);font-size:.78rem}
+.axislabels{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;margin-top:9px}
+.note{color:var(--muted);font-size:.88rem;margin-top:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:30px}
+.prospect-controls{display:grid;gap:24px}
+.control label{display:flex;justify-content:space-between;font-weight:700;margin-bottom:7px}
+.control label span:last-child{color:var(--accent)}
+.traits{display:grid;gap:10px}
+.trait{padding:15px;border:1px solid var(--line);border-radius:14px;background:#0e141c}
+.trait-head{display:flex;justify-content:space-between;gap:16px}
+.trait-head b{font-size:.92rem}.trait-head span{font-size:.84rem;color:var(--muted)}
+.track{height:7px;background:#28313d;border-radius:99px;margin-top:9px;overflow:hidden}
+.fill{height:100%;background:var(--accent);width:50%;border-radius:99px;transition:width .25s}
+.warning{padding:16px 18px;background:#15191f;border-left:3px solid var(--accent);color:#cbd3de;margin-top:22px}
+.sources li{margin:10px 0;color:#b7c0cc}.sources a{word-break:break-word}
+.footer{padding:70px 0;color:var(--muted);font-size:.9rem}
+.bigline{font-size:clamp(2.4rem,6vw,5.4rem);font-weight:900;letter-spacing:-.055em;line-height:.95}
+.bigline em{font-style:normal;color:var(--accent)}
+@media(max-width:760px){
+  .statrow,.grid2{grid-template-columns:1fr}
+  .dotbox{grid-template-columns:repeat(25,1fr);min-height:420px}
+  section{padding:70px 0}.fmeta{min-width:150px}
+  .money-mark{width:100px}.money-mark strong{font-size:.8rem}.money-mark small{font-size:.68rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">An interactive explainer</div>
+    <h1>The 0.01%</h1>
+    <p>Millions play basketball. Thousands become elite. Hundreds earn NBA roster spots. This explainer shows how quickly the pyramid narrows — and what separates NBA-level prospects from an already extraordinary population.</p>
+    <div class="scrollhint">↓ Scroll to enter the funnel</div>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="kicker">01 — The funnel</div>
+    <h2>Start with 1,000 high-school players.</h2>
+    <p class="lede">Use the buttons to see what remains at each stage. The dot grid is normalized to 1,000 players so the scale is visible.</p>
+
+    <div class="controls seg" id="stageButtons">
+      <button class="active" data-stage="hs">High school</button>
+      <button data-stage="ncaa">NCAA</button>
+      <button data-stage="draft">NBA draft</button>
+    </div>
+
+    <div class="panel">
+      <div class="dotbox" id="dotbox" aria-label="1,000-player probability visualization"></div>
+      <div class="legend"><span><i></i><span id="legendText">1,000 of 1,000 represented</span></span></div>
+    </div>
+
+    <div class="statrow">
+      <div class="stat"><div class="n">540,704</div><div class="label">U.S. boys playing high-school basketball</div></div>
+      <div class="stat"><div class="n">3.6%</div><div class="label">estimated HS → NCAA rate</div></div>
+      <div class="stat"><div class="n">1.0%</div><div class="label">draft-eligible NCAA men drafted in 2024</div></div>
+    </div>
+
+    <div class="callout" id="funnelCallout">At the NCAA stage, about <span>36 of every 1,000</span> high-school players remain.</div>
+
+    <div class="warning">
+      This is a pathway visualization, not a literal probability that any individual high-school player reaches the NBA. The NCAA-to-NBA figure applies to draft-eligible NCAA players, and international players can reach the NBA without attending an NCAA school.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">02 — “Professional” is much bigger than “NBA”</div>
+    <h2>Even elite college players have two very different finish lines.</h2>
+    <p class="lede">For the 2024 NCAA men's draft cohort, the NCAA estimated that 21.8% played professionally somewhere — NBA, G League, or internationally. Only about 1.0% were drafted into the NBA.</p>
+
+    <div class="funnel">
+      <div class="fbar">
+        <div class="fmeta"><strong>Draft-eligible NCAA cohort</strong><small>4,359 estimated players</small></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+      <div class="fbar">
+        <div class="fmeta"><strong>Played professionally</strong><small>≈21.8%</small></div>
+        <div class="bar" style="width:21.8%"></div>
+      </div>
+      <div class="fbar">
+        <div class="fmeta"><strong>Drafted by NBA</strong><small>43 NCAA players ≈1.0%</small></div>
+        <div class="bar" style="width:1%;min-width:7px"></div>
+      </div>
+    </div>
+
+    <div class="callout">The surprising part is not only that the NBA is rare. It is that the NBA is a <span>tiny slice of professional basketball itself.</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">03 — The money cliff</div>
+    <h2>NBA money lives on another scale.</h2>
+    <p class="lede">Worldwide pro-basketball salary data are fragmented, so instead of pretending there is one precise global distribution, this section plots verifiable NBA/G League-related anchors. Toggle the scale to see why logarithms matter.</p>
+
+    <div class="controls">
+      <button class="active" id="logBtn">Log scale</button>
+      <button id="linearBtn">Linear scale</button>
+    </div>
+
+    <div class="panel money">
+      <div class="money-axis" id="moneyAxis">
+        <div class="money-mark" data-v="636435"><div class="stem" style="--h:92px"></div><div class="ball"></div><strong>Two-way contract</strong><small>$636,435</small></div>
+        <div class="money-mark" data-v="1272870"><div class="stem" style="--h:145px"></div><div class="ball"></div><strong>0-year NBA minimum</strong><small>$1.27M*</small></div>
+        <div class="money-mark" data-v="59606817"><div class="stem" style="--h:220px"></div><div class="ball"></div><strong>Top-end example</strong><small>$59.6M</small></div>
+      </div>
+      <div class="axislabels"><span>$0.5M</span><span>$1M</span><span>$10M</span><span>$60M</span></div>
+    </div>
+    <p class="note">*The 0-year minimum is inferred from the official two-way salary being exactly 50% of the applicable zero-years-of-service NBA minimum: $636,435 × 2 = $1,272,870. The $59.6M example is Stephen Curry's listed 2025–26 base cash salary from Spotrac.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">04 — Build a prospect</div>
+    <h2>What traits tend to separate drafted prospects?</h2>
+    <p class="lede">Move the sliders. This is not an “NBA probability calculator.” It simply shows how several measurable traits line up with findings from a study of 3,610 NBA Draft Combine participants from 2000–2018.</p>
+
+    <div class="grid2">
+      <div class="panel prospect-controls">
+        <div class="control">
+          <label><span>Height</span><span id="heightOut">6'6"</span></label>
+          <input id="height" type="range" min="72" max="84" value="78">
+        </div>
+        <div class="control">
+          <label><span>Wingspan</span><span id="wingOut">6'10"</span></label>
+          <input id="wing" type="range" min="72" max="90" value="82">
+        </div>
+        <div class="control">
+          <label><span>Vertical jump</span><span id="vertOut">34 in</span></label>
+          <input id="vert" type="range" min="20" max="45" value="34">
+        </div>
+        <div class="control">
+          <label><span>3/4-court sprint</span><span id="sprintOut">3.20 s</span></label>
+          <input id="sprint" type="range" min="290" max="380" value="320">
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="traits">
+          <div class="trait">
+            <div class="trait-head"><b>Size profile</b><span id="sizeLabel">Strong</span></div>
+            <div class="track"><div class="fill" id="sizeFill"></div></div>
+          </div>
+          <div class="trait">
+            <div class="trait-head"><b>Length profile</b><span id="wingLabel">Strong</span></div>
+            <div class="track"><div class="fill" id="wingFill"></div></div>
+          </div>
+          <div class="trait">
+            <div class="trait-head"><b>Explosiveness</b><span id="vertLabel">Strong</span></div>
+            <div class="track"><div class="fill" id="vertFill"></div></div>
+          </div>
+          <div class="trait">
+            <div class="trait-head"><b>Speed</b><span id="speedLabel">Strong</span></div>
+            <div class="track"><div class="fill" id="speedFill"></div></div>
+          </div>
+        </div>
+        <div class="warning">The study found drafted combine participants were, on average, taller, longer, more explosive, more agile and faster than undrafted participants. But those factors are correlates and discriminators — not guarantees of NBA success.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">05 — The denominator changes the story</div>
+    <div class="bigline">“What are the odds?” is incomplete until you ask: <em>odds among whom?</em></div>
+    <p class="lede" style="margin-top:28px">Among all high-school players, the NBA is vanishingly rare. Among NCAA Division I players, it is still rare but meaningfully less so. Among top prospects invited to the NBA Draft Combine, the population is already heavily selected. The denominator is the story.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sources">
+    <div class="kicker">Sources & methodology</div>
+    <h2>Where the numbers come from.</h2>
+    <ul>
+      <li><a href="https://www.ncaa.org/student-athletes/probability-of-competing-beyond-high-school/" target="_blank" rel="noopener">NCAA — Probability of Competing Beyond High School</a>: 540,704 high-school boys’ basketball participants; 19,617 NCAA participants; 3.6% HS→NCAA; 4,359 estimated draft-eligible NCAA men; 43 NCAA players drafted in 2024; 21.8% estimated to play professionally somewhere.</li>
+      <li><a href="https://gleague.nba.com/about" target="_blank" rel="noopener">NBA G League — What You Need to Know</a>: up to 15 standard NBA contracts plus up to three two-way contracts per NBA team; 2025–26 two-way salary of $636,435.</li>
+      <li><a href="https://pr.nba.com/nba-salary-cap-2025-26-season/" target="_blank" rel="noopener">NBA Communications — 2025–26 Salary Cap</a>: $154.647M salary cap and $139.182M minimum team salary.</li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6820507/" target="_blank" rel="noopener">Frontiers / PMC — NBA Draft Combine study</a>: 3,610 combine participants from 2000–2018; drafted players outperformed undrafted players on height, wingspan, vertical jump/reach, agility and sprint measures.</li>
+      <li><a href="https://www.spotrac.com/nba/golden-state-warriors" target="_blank" rel="noopener">Spotrac — Golden State Warriors salary table</a>: Stephen Curry 2025–26 base cash salary of $59,606,817.</li>
+    </ul>
+    <p class="note">This page avoids presenting a fabricated worldwide salary distribution because salary reporting across international basketball leagues is incomplete and inconsistent. The earnings section is therefore an earnings landscape using verifiable anchors.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="wrap">Built as an interactive explainer: probability becomes easier to understand when you can see the population disappear.</div></footer>
+
+<script>
+const dotbox=document.getElementById('dotbox');
+for(let i=0;i<1000;i++){const d=document.createElement('div');d.className='dot';dotbox.appendChild(d)}
+const dots=[...dotbox.children];
+const stages={
+ hs:{keep:1000,legend:'1,000 of 1,000 represented',call:'Start with <span>1,000 high-school players</span>.'},
+ ncaa:{keep:36,legend:'≈36 of 1,000 reach NCAA basketball',call:'At the NCAA stage, about <span>36 of every 1,000</span> high-school players remain.'},
+ draft:{keep:1,legend:'≈0.36 of 1,000 when chaining 3.6% × 1.0%',call:'Chaining the two published rates gives roughly <span>0.36 drafted NCAA players per 1,000 high-school players</span> — about 1 in 2,800. This is illustrative, not an individual forecast.'}
+};
+function setStage(k){
+ const s=stages[k];
+ dots.forEach((d,i)=>{d.className='dot '+(i<s.keep?'kept':'dim')});
+ document.getElementById('legendText').textContent=s.legend;
+ document.getElementById('funnelCallout').innerHTML=s.call;
+ document.querySelectorAll('#stageButtons button').forEach(b=>b.classList.toggle('active',b.dataset.stage===k));
+}
+document.querySelectorAll('#stageButtons button').forEach(b=>b.addEventListener('click',()=>setStage(b.dataset.stage)));
+setStage('hs');
+
+const marks=[...document.querySelectorAll('.money-mark')];
+const minV=500000,maxV=60000000;
+function moneyScale(mode){
+ marks.forEach(m=>{
+   const v=+m.dataset.v;
+   let x;
+   if(mode==='log') x=(Math.log10(v)-Math.log10(minV))/(Math.log10(maxV)-Math.log10(minV))*100;
+   else x=(v-minV)/(maxV-minV)*100;
+   m.style.left=Math.max(2,Math.min(98,x))+'%';
+ });
+ document.getElementById('logBtn').classList.toggle('active',mode==='log');
+ document.getElementById('linearBtn').classList.toggle('active',mode==='linear');
+}
+document.getElementById('logBtn').addEventListener('click',()=>moneyScale('log'));
+document.getElementById('linearBtn').addEventListener('click',()=>moneyScale('linear'));
+moneyScale('log');
+
+function ftin(n){return Math.floor(n/12)+"'"+(n%12)+'"'}
+const inputs={
+ height:document.getElementById('height'),wing:document.getElementById('wing'),
+ vert:document.getElementById('vert'),sprint:document.getElementById('sprint')
+};
+function labelScore(x){return x>=75?'Exceptional':x>=58?'Strong':x>=40?'Competitive':'Below typical elite range'}
+function updateProspect(){
+ const h=+inputs.height.value,w=+inputs.wing.value,v=+inputs.vert.value,s=+inputs.sprint.value/100;
+ document.getElementById('heightOut').textContent=ftin(h);
+ document.getElementById('wingOut').textContent=ftin(w);
+ document.getElementById('vertOut').textContent=v+' in';
+ document.getElementById('sprintOut').textContent=s.toFixed(2)+' s';
+ const hs=(h-72)/12*100, ws=(w-72)/18*100, vs=(v-20)/25*100, ss=(3.8-s)/(3.8-2.9)*100;
+ [['size',hs],['wing',ws],['vert',vs],['speed',ss]].forEach(([id,val])=>{
+   val=Math.max(0,Math.min(100,val));
+   document.getElementById(id+'Fill').style.width=val+'%';
+   document.getElementById(id+'Label').textContent=labelScore(val);
+ });
+}
+Object.values(inputs).forEach(x=>x.addEventListener('input',updateProspect));
+updateProspect();
+</script>
+</body>
+</html>
